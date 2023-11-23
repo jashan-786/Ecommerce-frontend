@@ -7,7 +7,12 @@ export default function Singnup() {
   return (
     <Center m={10} >
 
-        <SignUp signInUrl="Signin"  afterSignUpUrl="Signin"/>
+        <SignUp 
+        
+        afterSignUpUrl="/"
+        routing='path'  
+        signInUrl='/'
+        />
       
     </Center>
   )

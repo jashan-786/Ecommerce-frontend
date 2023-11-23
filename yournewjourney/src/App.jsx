@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useNavigation } from 'react-router-dom';
 
 
 import { ChakraProvider } from '@chakra-ui/react'
@@ -46,46 +46,63 @@ const clerkPubKey = "pk_test_ZWxlY3RyaWMtb3gtNzAuY2xlcmsuYWNjb3VudHMuZGV2JA"
 function App() {
   const stripePromise = loadStripe('YOUR_PUBLISHABLE_KEY')
 
+
   const totalCartItems = useRecoilValue(currentItem);
   return (
- 
-    <ClerkProvider  publishableKey={clerkPubKey}>
-    
+
+
     <ChakraProvider>
-    <Elements stripe={stripePromise}>
-      <Router>
-        <Navigation/>
-        <Routes>
-          <Route path='/About' Component={AboutUs} />
-          <Route path='/Services' Component={Services} />
-          <Route path='/Resume' Component={Resume} />
-          <Route  path='/ContactUs' Component={ContactUs}/>
-          <Route path='/Home' Component={Home}/>
-          <Route path= "/Appointment"  Component={Appointment}/>
-          <Route path='/Appointment/BookingPage' Component={BookingPage}/>
-          <Route path="/SignIn" Component={Signin}/>
-          <Route path="/SignUp" Component={Singnup}/>
-          
-          <Route path="/Accomodation" Component={Accomodation}/>
-          <Route path="/Shop" Component={Cart}/>
-          <Route path="/Furniture" Component={FurnitureService}/>
-          <Route path='/Accomodation/moreinfo' Component={AccomodationInfo}/>
-          <Route path='/AirportPickup' Component={AirportPickup}/>
-          <Route path='/' Component={Home}/>
-          <Route path='/*' Component={Invalid} />
-          <Route path="/payment"  Component={PaymentForm}/>
-        </Routes>
+      <Elements stripe={stripePromise}>
+        <Router>
 
-      </Router>
+        <ClerkProviderWithRoutes />
 
-  
-</Elements>
-  
-    </ChakraProvider>
-    </ClerkProvider>
- 
-   
+        </Router>
+
+
+      </Elements>
+
+    </ChakraProvider >
+
+
+
   )
 }
 
 export default App
+
+
+function ClerkProviderWithRoutes() {
+  return ( 
+  <ClerkProvider
+  publishableKey={clerkPubKey}
+  navigate={(to) => navigate(to)}> 
+  <Navigation />
+  <Routes>
+
+    <Route path='/About' Component={AboutUs} />
+    <Route path='/Services' Component={Services} />
+    <Route path='/Resume' Component={Resume} />
+    <Route path='/ContactUs' Component={ContactUs} />
+    <Route path='/Home' Component={Home} />
+    <Route path="/Appointment" Component={Appointment} />
+    <Route path='/Appointment/BookingPage' Component={BookingPage} />
+    <Route path="/Signin" Component={Signin} />
+    <Route path="/Signup" Component={Singnup} />
+
+    <Route path="/Accomodation" Component={Accomodation} />
+    <Route path="/Shop" Component={Cart} />
+    <Route path="/Furniture" Component={FurnitureService} />
+    <Route path='/Accomodation/moreinfo' Component={AccomodationInfo} />
+    <Route path='/AirportPickup' Component={AirportPickup} />
+    <Route path='/' Component={Home} />
+    <Route path='/*' Component={Invalid} />
+    <Route path="/payment" Component={PaymentForm} />
+
+  </Routes>
+
+  </ClerkProvider>
+  )
+
+
+}
